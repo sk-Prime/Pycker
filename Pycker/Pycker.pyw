@@ -9,7 +9,7 @@ import colorsys
 from random import randint
 from tkinter import messagebox
 try:
-    from PIL import ImageGrabg
+    from PIL import ImageGrab
 except:
     messagebox.showerror("Module not Found","PIL library is missing")
     exit()
