@@ -140,13 +140,13 @@ class Main_UI(tkinter.Frame):
         if self.dbp: #if color name database exist then the color view label frame text will  update
             self.colorview_text_change(rgb)
         self.entry_var_set(rgb) #entry widgets: color value set, rgb entry=rgb value, hex entry=hex value
-        if self.slider_mode=='rgb' and self.pick==1:
-            self.s1_var.set(rgb[0])
+        if self.slider_mode=='rgb' and self.pick==1: #RGB =255, so the slider need to have 250 point
+            self.s1_var.set(rgb[0]) #slider 1 is Red, and setting position to given R
             self.s2_var.set(rgb[1])
             self.s3_var.set(rgb[2])
-        elif self.slider_mode=='hsl' and self.pick==1:
+        elif self.slider_mode=='hsl' and self.pick==1: #hsl has 360,100,100. slider point will changed accordingly
             hsl=self.rgb2hsl(rgb)
-            self.s1_var.set(hsl[0])
+            self.s1_var.set(hsl[0]) #slider 1 is Hue,
             self.s2_var.set(hsl[1])
             self.s3_var.set(hsl[2])
 
