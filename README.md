@@ -11,7 +11,8 @@ To get color value we used Pillow library to take a screenshot, and load that sc
 2.	Python Imaging Library – Pillow (PIL)
 
 
-## User manual
+## User manual 
+Look at the image and match the numbers
 1.	the ‘color view’ frame will update with color name, if the color’s hex value exists in database  (dict)
 2.	It is the view of main color, either inputted manually or picked by “Pick Color” button. Right mouse button click will copy       hex color value to clipboard.
 3.	Analogous colors of main color
