@@ -7,7 +7,12 @@ import tkinter
 import pickle
 import colorsys
 from random import randint
-from PIL import ImageGrab
+from tkinter import messagebox
+try:
+    from PIL import ImageGrabg
+except:
+    messagebox.showerror("Module not Found","PIL library is missing")
+    exit()
 
 class Main_UI(tkinter.Frame):
     def __init__(self, parent,**kwag):
