@@ -157,23 +157,23 @@ class Main_UI(tkinter.Frame):
         self.hsl_var.set(str(h)+"°"+', '+str(s)+'%, '+str(l)+"%") #adding degree and %, hsl 360degree
         self.hex_var.set(self.rgb2hex(rgb))
 
-    def slider_mode_entry_bind(self,val):
+    def slider_mode_entry_bind(self,val): #left mouse click bind, slider mode changed rgb or hsl
         if val!=self.slider_mode:
             self.slider_mode_set(val)
 
-    def entry_bind(self,var=0):
+    def entry_bind(self,var=0): #right mouse click bind, copy to clipboard
         value=var.get()
         self.parent.clipboard_clear()
         self.parent.clipboard_append(value)
 
-    def entry_return_bind(self,var=0):
+    def entry_return_bind(self,var=0): #enter key press bind
         value=var.get()
         self.pick=1
-        if str(var)=="PY_VAR0":
+        if str(var)=="PY_VAR0": #if entry is self.hex_ent
             try:
                 self.one_func_to_rule_them_all(self.hex2rgb(value))
             except: pass
-        elif str(var)=="PY_VAR1":
+        elif str(var)=="PY_VAR1": #if self.rgb_ent
             if value=="random":
                 value=self.random_color()
             else:
@@ -183,7 +183,7 @@ class Main_UI(tkinter.Frame):
                 value=[int(v) for v in value]
                 self.one_func_to_rule_them_all(value)
             except: pass
-        elif str(var)=="PY_VAR2":
+        elif str(var)=="PY_VAR2": #if self.hsl ent
             value=value.replace(" ",'')
             value=value.replace("%",'')
             value=value.replace("°",'')
@@ -220,7 +220,7 @@ class Main_UI(tkinter.Frame):
                 value=[0,0,0]
             try:
                 value=[int(v) for v in value]
-                self.s1_var.set(value[0])
+                self.s1_var.set(value[0]) #changing slider 1 position
                 self.s2_var.set(value[1])
                 self.s3_var.set(value[2])
                 self.slider_frame.config(text="Slider- RGB")
@@ -255,7 +255,7 @@ class Main_UI(tkinter.Frame):
     def rgb2hsl(self,rgb,r=0):
         rgb=[v/255.0 for v in rgb]
         h,l,s=colorsys.rgb_to_hls(*rgb)
-        h=360*h
+        h=360*h #360 degree color space
         l=100*l
         s=100*s
         if r==0:
@@ -288,10 +288,10 @@ class Main_UI(tkinter.Frame):
 
 #-----related to color view frame and labels------------------
     def color_label_click(self,event=0): #mouse click event detect, to set color to big center label
-        hex_col=event.widget.cget('background')
-        self.pick=1
+        hex_col=event.widget.cget('background') #getting smaller colr label's background color
+        self.pick=1 #the slider will be affected now
         self.one_func_to_rule_them_all(self.hex2rgb(hex_col))
-        self.pick=0
+        self.pick=0 
 
     def center_color_label_click(self,event=0): #right mouse click copy the value to clip board hexval
         value=self.hex_var.get()
@@ -349,7 +349,7 @@ class Main_UI(tkinter.Frame):
 
             return [self.hsl2rgb((hv,s,l)) for hv in modif_h]
 
-        def irrational(deg=137):
+        def irrational(deg=137): #golden angel
             h1=fix(h+deg)
             h2=fix(h+deg*2)
             h3=fix(h+deg*3)
@@ -362,16 +362,16 @@ class Main_UI(tkinter.Frame):
 #------------imageGrab- screenshot-----------
     def grab_image(self):
         img = ImageGrab.grab()
-        self.image_pix=img.load()
+        self.image_pix=img.load() #making pixel list
 
-    def get_color_from_pix(self,x,y):#x,y cordination
-        return self.image_pix[x,y]
+    def get_color_from_pix(self,x,y):#x,y cordination from mouse
+        return self.image_pix[x,y] #screen size and the captured imaze have same resolution. so mouse cordination from screen can be applied to get pixel value
 #--------------------------------------------
 
 
 #---top level----------------
     def trace_btn_cmd(self):
-        self.tracer_toplevel()
+        self.tracer_toplevel() #top level widget
         self.trace_btn.config(text="click left mouse button",state="disable")
     def tracer_toplevel(self): #open top level window
         self.pick=1
