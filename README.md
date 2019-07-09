@@ -25,3 +25,6 @@ Left mouse click on this entry will change Slider mode to RGB. Right click will 
 9.	HSL color entry. Left mouse click on this entry will change slider mode HSL. Right click will copy the code to clipboard.
 10.	Hex color value entry. Right click to copy to clipboard.
 11.	Slider mode indicator. HSL and RGB two mode exist.
+
+The color_data.dbp was created from https://github.com/meodai/color-names
+it is a pickled dictionary, which contains {hex_code:color_name}
