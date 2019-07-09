@@ -204,7 +204,7 @@ class Main_UI(tkinter.Frame):
             self.one_func_to_rule_them_all((s1,s2,s3))
         elif self.slider_mode=='hsl':
             self.one_func_to_rule_them_all(self.hsl2rgb((s1,s2,s3)))
-        self.slider_frame.focus()
+        #self.slider_frame.focus()
 
 
     def slider_mode_set(self,key):
