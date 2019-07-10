@@ -28,3 +28,5 @@ Left mouse click on this entry will change Slider mode to RGB. Right click will 
 
 The color_data.dbp was created from https://github.com/meodai/color-names
 it is a pickled dictionary, which contains {hex_code:color_name}
+
+icon collected from https://www.flaticon.com/free-icon/color-picker_719747
