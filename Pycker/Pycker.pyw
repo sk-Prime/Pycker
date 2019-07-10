@@ -19,6 +19,7 @@ class Main_UI(tkinter.Frame):
         tkinter.Frame.__init__(self,parent,**kwag)
         self.parent=parent
         self.parent.title("Pycker")
+        self.parent.iconbitmap("Pyco.ico")
 
         self.c_size=61 #big center color label size
         self.dbp=1 #if database file exist then color name will be shown
@@ -42,7 +43,7 @@ class Main_UI(tkinter.Frame):
         self.s2_var=tkinter.IntVar()
         self.s3_var=tkinter.IntVar()
 
-        self.slider_mode='rgb' #slider mode : rgb or hsl, the slider value will change accrldingly
+        self.slider_mode='rgb' #slider mode : rgb or hsl, the slider value will change accordingly
 
     #label objects lists for future tk.label.config
         self.top_labels=[] #each contain four label objects
