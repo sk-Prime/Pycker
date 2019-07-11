@@ -8,11 +8,17 @@ import pickle
 import colorsys
 from random import randint
 from tkinter import messagebox
+
+MSS_EXIST=0
 try:
-    from PIL import ImageGrab
+    import mss
+    MSS_EXIST=1
 except:
-    messagebox.showerror("Module not Found","PIL library is missing")
-    exit()
+    try:
+        from PIL import ImageGrab #imagegrab has some problem, MSS is highly recomended
+    except:
+        messagebox.showerror("Module not Found","Either PIL or mss library is required")
+        exit()
 
 class Main_UI(tkinter.Frame):
     def __init__(self, parent,**kwag):
@@ -420,11 +426,19 @@ class Main_UI(tkinter.Frame):
 
 #------------imageGrab- screenshot-----------
     def grab_image(self):
-        img = ImageGrab.grab()
-        self.image_pix=img.load() #making pixel list
+        if MSS_EXIST:
+            with mss.mss() as sct:
+                image = sct.grab(sct.monitors[1])
+                self.image_pix=image.pixel #function reference
+        else:
+            img = ImageGrab.grab()
+            self.image_pix=img.load() #making pixel list
 
     def get_color_from_pix(self,x,y):#x,y cordination from mouse
-        return self.image_pix[x,y] #screen size and the captured imaze have same resolution. so mouse cordination from screen can be applied to get pixel value
+        if MSS_EXIST:
+            return self.image_pix(x,y)
+        else: #imagegrab
+            return self.image_pix[x,y] #screen size and the captured imaze have same resolution. so mouse cordination from screen can be applied to get pixel value
 #--------------------------------------------
 
 
