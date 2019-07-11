@@ -18,7 +18,7 @@ class Main_UI(tkinter.Frame):
     def __init__(self, parent,**kwag):
         tkinter.Frame.__init__(self,parent,**kwag)
         self.parent=parent
-        self.parent.title("Pycker")
+        self.parent.title("Pycker 1.1")
         self.parent.iconbitmap("Pyco.ico")
 
         self.c_size=61 #big center color label size
@@ -28,6 +28,15 @@ class Main_UI(tkinter.Frame):
                 self.color_name=pickle.load(db) #unpickle={'hex value':'color name'}
         except:
             self.dbp=0 #else color name won't be available
+
+
+    #--steps frame----------vertical labels- steps----------
+        self.steps_frame=tkinter.Frame(self.parent)
+        self.steps_frame.pack(side="left",padx=2,fill="y")
+
+    #frame holder for all other widget and frames
+        self.frame_holder=tkinter.Frame(self.parent)
+        self.frame_holder.pack(side='right',expand="yes",fill="both")
 
     #screenshot's pixels---
         self.image_pix=None #pixel value of the screenshot
@@ -52,14 +61,21 @@ class Main_UI(tkinter.Frame):
         self.right_labels=[]
         self.center_label=None #single label object
 
+    #steps var, and labels
+        self.steps_labels=[]
+        self.step_count=15
+        self.step_base_color=(176,224,230)
+
     #the resolution of the monitor, to make toplevel fullscreen---------------
         self.screen_width = self.parent.winfo_screenwidth()
         self.screen_height = self.parent.winfo_screenheight()
         self.tracer_win=None #tk toplevel object, future reference>destroy
 
     #label frame-color view---> Frame object
-        self.color_view_frame=tkinter.LabelFrame(self.parent,text="Color View")
-        self.color_view_frame.pack(padx=9,pady=2)
+        self.color_view_frame=tkinter.LabelFrame(self.frame_holder,text="Color View")
+        self.color_view_frame.pack(padx=2,pady=2,fill="both",expand="yes")
+        tkinter.Grid.rowconfigure(self.color_view_frame,1,weight=1)
+        tkinter.Grid.columnconfigure(self.color_view_frame,1,weight=1)
     #---------------------
 
     #color labels--------all the labels where colors will be shown
@@ -71,7 +87,8 @@ class Main_UI(tkinter.Frame):
                     column=i+1
                 elif incr=='row':
                     row=i+1
-                temp.grid(row=row,column=column)
+
+                temp.grid(row=row,column=column,sticky='nsew')
 
                 labels.append(temp)
                 temp.bind('<Button-1>',self.color_label_click)
@@ -80,8 +97,8 @@ class Main_UI(tkinter.Frame):
         self.top_labels=label_gen(incr='col')
         self.left_labels=label_gen(incr='row')
 
-        self.center_label=tkinter.Label(self.color_view_frame,text='  ',font='consolas %s'%self.c_size,background='skyblue')
-        self.center_label.grid(row=1,column=1,columnspan=4,rowspan=4)
+        self.center_label=tkinter.Label(self.color_view_frame,text='  ',font='consolas %s'%self.c_size,background='#7ec0ee')
+        self.center_label.grid(row=1,column=1,columnspan=4,rowspan=4,sticky="nsew")
         self.center_label.bind('<Button-3>',self.center_color_label_click)
 
         self.bottom_labels=label_gen(row=6,incr='col')
@@ -89,13 +106,13 @@ class Main_UI(tkinter.Frame):
     #---------------------------
 
     #trace button- this button will initiate the toplevel, function> trace_btn_cmd
-        self.trace_btn=tkinter.Button(self.parent,text="Pick Color",width=20,height=1,command=self.trace_btn_cmd)
-        self.trace_btn.pack(padx=9,pady=1,fill='both')
+        self.trace_btn=tkinter.Button(self.frame_holder,text="Pick Color",width=20,height=1,command=self.trace_btn_cmd)
+        self.trace_btn.pack(padx=2,pady=1,fill='both')
     #---------------------------
 
     #entry frame for three entry widget, 1.rgb 2.hsl 3.hex entry -->frame object
-        self.entry_frame=tkinter.LabelFrame(self.parent,text="color entry")
-        self.entry_frame.pack(padx=9,fill='both')
+        self.entry_frame=tkinter.LabelFrame(self.frame_holder,text="color entry")
+        self.entry_frame.pack(padx=2,fill='both')
         #---entry------
         self.rgb_ent=tkinter.Entry(self.entry_frame,width=19,font='consolas 9',textvariable=self.rgb_var)
         self.rgb_ent.pack(padx=3,pady=1,fill='both')
@@ -116,8 +133,8 @@ class Main_UI(tkinter.Frame):
     #------------------
 
     #slider frame to hold three slider, -->frame object
-        self.slider_frame=tkinter.LabelFrame(self.parent,text="Slider")
-        self.slider_frame.pack(padx=9,fill='both')
+        self.slider_frame=tkinter.LabelFrame(self.frame_holder,text="Slider")
+        self.slider_frame.pack(padx=2,fill='both')
         #sliders----
         self.slider_1=tkinter.Scale(self.slider_frame,length=140,width=5,orient="horizontal",variable=self.s1_var,command=self.slider_change_bind)
         self.slider_1.pack(fill='both')
@@ -126,8 +143,24 @@ class Main_UI(tkinter.Frame):
         self.slider_3=tkinter.Scale(self.slider_frame,length=140,width=5,orient="horizontal",variable=self.s3_var,command=self.slider_change_bind)
         self.slider_3.pack(fill='both')
         #-------------
-    #----------------------
+    #step base set button
+        self.step_base_btn=tkinter.Button(self.frame_holder,text="Set Step's Base color",width=20,height=1,command=self.step_base_color_set)
+        self.step_base_btn.pack(padx=2,pady=1,fill='both')
+
+        self.__generate_steps()
+    #-------------------------------
         self.slider_mode_set('rgb') #slidermode set; using self.slider_mode variable
+
+    def __generate_steps(self): #to generate steps
+        for pre_exist_labels in self.steps_labels:
+            pre_exist_labels.destroy()
+        self.steps_labels=[]
+        for num in range(self.step_count):
+            temp_label=tkinter.Label(self.steps_frame,text='  ',font='courier 16',background='#b0e0e6')
+            temp_label.bind('<Button-1>',self.color_label_click)
+            self.steps_labels.append(temp_label)
+            temp_label.pack(expand="yes")
+
 #end of gui-------------------------------------------------------------------------------------------------
 
 #-----------------------------------------methods---------------------------------------------------------
@@ -151,6 +184,8 @@ class Main_UI(tkinter.Frame):
             self.s2_var.set(hsl[1])
             self.s3_var.set(hsl[2])
 
+        self.step_labels_color_set(rgb)
+
 #entry related function-----------------------------------
     def entry_var_set(self,rgb):
         self.rgb_var.set(str(rgb)[1:-1])
@@ -167,6 +202,19 @@ class Main_UI(tkinter.Frame):
         self.parent.clipboard_clear()
         self.parent.clipboard_append(value)
 
+    def __random_all(self): #entry return bind random all input
+        for label in self.steps_labels:
+            label.config(background=self.rgb2hex(self.random_color()))
+        for label in self.top_labels:
+            label.config(background=self.rgb2hex(self.random_color()))
+        for label in self.left_labels:
+            label.config(background=self.rgb2hex(self.random_color()))
+        for label in self.right_labels:
+            label.config(background=self.rgb2hex(self.random_color()))
+        for label in self.bottom_labels:
+            label.config(background=self.rgb2hex(self.random_color()))
+        self.center_label.config(background=self.rgb2hex(self.random_color()))
+
     def entry_return_bind(self,var=0): #enter key press bind
         value=var.get()
         self.pick=1
@@ -177,6 +225,16 @@ class Main_UI(tkinter.Frame):
         elif str(var)=="PY_VAR1": #if self.rgb_ent
             if value=="random":
                 value=self.random_color()
+            elif value=="random all":
+                self.__random_all()
+            elif value[:5]=="steps":
+                try:
+                    steps=int(value[5:])
+                    self.step_count=steps
+                    self.__generate_steps()
+                    self.step_labels_color_set(self.hex2rgb(self.center_label.cget('background')))
+                except Exception as e:
+                    print(e)
             else:
                 value=value.replace(" ",'')
                 value=value.split(",")
@@ -292,7 +350,7 @@ class Main_UI(tkinter.Frame):
         hex_col=event.widget.cget('background') #getting smaller colr label's background color
         self.pick=1 #the slider will be affected now
         self.one_func_to_rule_them_all(self.hex2rgb(hex_col))
-        self.pick=0 
+        self.pick=0
 
     def center_color_label_click(self,event=0): #right mouse click copy the value to clip board hexval
         value=self.hex_var.get()
@@ -350,7 +408,7 @@ class Main_UI(tkinter.Frame):
 
             return [self.hsl2rgb((hv,s,l)) for hv in modif_h]
 
-        def irrational(deg=137): #golden angel
+        def irrational(deg=137.508): #golden angel
             h1=fix(h+deg)
             h2=fix(h+deg*2)
             h3=fix(h+deg*3)
@@ -396,6 +454,39 @@ class Main_UI(tkinter.Frame):
         self.trace_btn.config(state="normal",text="Pick Color")
         self.pick=0
 #-----------------------------------------
+#---steps------------------------------
+    def step_labels_color_set(self,end_color):
+        def step_make(b,e,step):
+            goal=abs(b-e)
+            required_step=int(goal/step)
+            if b<e:
+                return (required_step)
+            else:
+                return (-required_step)
+        def rgb_step():
+            output=[]
+            for i in range(3):
+                b=self.step_base_color[i]
+                e=end_color[i]
+                output.append(step_make(b,e,self.step_count))
+            return output
+
+        r,g,b=rgb_step()
+        begin=self.step_base_color
+        for i in range(self.step_count):
+            color=(begin[0]+(r*i),begin[1]+(g*i),begin[2]+(b*i))
+            color='#%02x%02x%02x' % color
+            self.steps_labels[i].config(bg=color)
+
+    def step_base_color_set(self):
+        try:
+            rgb=self.hex2rgb(self.hex_var.get())
+            self.step_base_color=rgb
+            self.step_labels_color_set(rgb)
+        except:
+            pass
+
+
 
 
 
