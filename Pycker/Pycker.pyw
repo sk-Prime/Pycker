@@ -20,7 +20,7 @@ class Main_UI(tkinter.Frame):
         self.parent=parent
         self.parent.title("Pycker 1.1")
         self.parent.iconbitmap("Pyco.ico")
-
+        self.parent.minsize(190,435)
         self.c_size=61 #big center color label size
         self.dbp=1 #if database file exist then color name will be shown
         try:
