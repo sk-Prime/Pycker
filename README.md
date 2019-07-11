@@ -5,8 +5,8 @@ To get color value we used Pillow library to take a screenshot, and load that sc
 
 ## Requirements
 1.	Python 3
-2.  <a href ="https://pypi.org/project/mss/">mss</a> module
-<br>or Python Imaging Library – Pillow (PIL)-not required, if mss exist in system (mss highly recomended)
+2.  <a href ="https://pypi.org/project/mss/">mss</a> module<br>
+or Python Imaging Library – Pillow (PIL)-not required, if mss exist in system (mss highly recomended)
 
 
 ## User manual
