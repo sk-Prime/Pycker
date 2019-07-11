@@ -1,7 +1,7 @@
 # Pycker
 ## Python Tkinter based Color picker
 Pycker is a python tkinter based color picker tool. Tkinter has no mouse tracking system outside a widget. So in this software we use an invisible toplevel window to get the mouse coordination (x,y). 
-To get color value we used Pillow library to take a screenshot, and load that screenshot image to get pixel value from mouse coordination. 
+To get color value we used Pillow library/mss library to take a screenshot, and load that screenshot image to get pixel value from mouse coordination. pillow screenshot has some problem with higher resolution screen and maybe not working on linux. so mss is the best option.
 
 ## Requirements
 1.	Python 3
