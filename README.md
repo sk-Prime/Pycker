@@ -9,8 +9,8 @@ To get color value we used Pillow library to take a screenshot, and load that sc
 
 
 ## User manual
-Look at the image and match the numbers
-![Manual Image](https://github.com/sk-Prime/Pycker/blob/master/Pycker/Pycker%20Manual_files/Pycker%20Manual.png)
+Look at the image and match the numbers<br>
+<img src="https://github.com/sk-Prime/Pycker/blob/master/Pycker/Pycker%20Manual_files/Pycker%20Manual.png" height="800">
 1.	the ‘color view’ frame will update with color name, if the color’s hex value exists in database  (dict)
 2.	It is the view of main color, either inputted manually or picked by “Pick Color” button. **Right mouse click** will copy       hex color value to clipboard.
 3.	Analogous colors of main color. clicking any of this four colors will send it to the center, main color view.
