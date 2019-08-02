@@ -9,6 +9,12 @@ import colorsys
 from random import randint
 from tkinter import messagebox
 
+#solve High dpi issue in win10
+from ctypes import windll
+user32 = windll.user32
+user32.SetProcessDPIAware()
+#------------------------------
+
 MSS_EXIST=0
 try:
     import mss
