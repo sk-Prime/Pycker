@@ -8,6 +8,15 @@ To get color value we used Pillow library/mss library to take a screenshot, and 
 2.  <a href ="https://pypi.org/project/mss/">mss</a> library<br>
 or Python Imaging Library – Pillow (PIL)-not required, if mss exist in system (mss highly recomended)
 
+## High DPI monitor setting
+In high DPI monitor pycker doesn't work as expected. In windows 10 you can fix it by following the steps listed bellow
+1. Right click on pycker.exe and open properties
+2. Then click on compatible tab
+3. At the bottom of the dialog there is a option named "change high dpi setting" click on it. It will open a new dialog.
+4. Tick the override high dpi scaling behavior checkbox.
+
+Then pycker will work as expected.
+
 
 ## User manual
 Look at the image and match the numbers<br>
